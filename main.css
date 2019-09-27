@@ -1,0 +1,51 @@
+header {
+    margin: 2px 1px 10px 1px;
+    border-bottom: 2px solid gray;
+}
+
+section.section-input {
+    margin: 1px 1px 20px 1px;
+}
+
+#canvas1 {
+    border: 1px solid black;
+}
+
+#command-str {
+    width: 20em;
+}
+
+.section-command-list {
+    width: 300px;
+}
+
+.section-command-list ul {
+    padding: 3px 3px 1px 3px;
+    border: 1px solid gray;
+    border-radius: 3px;
+    min-height: 20px;
+}
+
+.section-command-list li {
+    list-style: none;
+    margin-bottom: 2px;
+}
+
+.section-command-list li span:nth-child(1) {
+    display: inline-block;
+    width: 35px;
+    text-align: right;
+    border: 1px solid gray;
+    border-radius: 3px 0px 0px 3px;
+    padding: 0 3px;
+}
+
+.section-command-list li span:nth-child(2) {
+    display: inline-block;
+    width: 242px;
+    border: 1px solid gray;
+    border-left: none;
+    border-radius: 0px 3px 3px 0px;
+    padding: 0 3px;
+}
+

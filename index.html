@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>jsonfont</title>
+    <meta name="description" content="jsonfont">
+    <meta name="keywords" content="jsonfont,vuejs">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+			  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			  crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vuex"></script>
+  </head>
+ 
+  <body>
+  <header>JsonFont</header>
+
+  <article id="app">
+
+    <section class="section-input">
+      <label for="#command-str">コマンド：</label>
+      <input id="command-str" type="text" v-bind:value="commandStr">
+      <button id="button-update" onclick="onclick_update(event)">update</button>
+    </section>
+
+    <section class="section-output">
+      <canvas id="canvas1" width="300" height="300" />
+    </section>
+
+    <section class="section-command-list">
+      <ul>
+        <li v-for="data in commandList"><span>{{data.number}}</span><span>{{data.name}}</span></li>
+      </ul>
+    </section>
+
+  </article>
+
+  <script src="main.js"></script>
+</body>
+</html>
