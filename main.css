@@ -17,6 +17,8 @@ section.section-input {
 
 .section-command-list {
     width: 300px;
+    max-height: 300px;
+    overflow-y: scroll;
 }
 
 .section-command-list ul {
@@ -31,6 +33,10 @@ section.section-input {
     margin-bottom: 2px;
 }
 
+.section-command-list li:hover {
+    background-color: #AFF;
+}
+
 .section-command-list li span:nth-child(1) {
     display: inline-block;
     width: 35px;
@@ -42,7 +48,7 @@ section.section-input {
 
 .section-command-list li span:nth-child(2) {
     display: inline-block;
-    width: 242px;
+    width: calc(100% - 50px);
     border: 1px solid gray;
     border-left: none;
     border-radius: 0px 3px 3px 0px;
