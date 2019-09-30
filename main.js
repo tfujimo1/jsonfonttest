@@ -4,6 +4,7 @@ class CommandData {
     number;
     name;
     dataList = [ ];
+    startPos;
     constructor (number, name, dataList) {
         this.number = number;
         this.name = name;
