@@ -31,7 +31,9 @@
 
     <section class="section-command-list">
       <ul>
-        <li v-for="data in commandList"><span>{{data.number}}</span><span>{{data.text}}</span></li>
+        <li v-for="(data, index) in commandList">
+          <span>{{data.number}}</span><span onclick="onclick_command(event)" v-bind:command-index="index">{{data.text}}</span>
+        </li>
       </ul>
     </section>
 

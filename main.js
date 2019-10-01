@@ -25,6 +25,14 @@ class CommandData {
             ctx.quadraticCurveTo(this.dataList[2], this.dataList[3], this.dataList[0], this.dataList[1]);
         }
     }
+    strokeCommand(ctx) {
+        ctx.beginPath()
+        ctx.moveTo(this.startPos[0], this.startPos[1])
+        this.drawPath(ctx)
+        ctx.stroke()
+        ctx.closePath()
+    }
+
     get text () {
         return this.name + " : " + this.dataList.join(" ");
     }
@@ -41,6 +49,23 @@ const store = new Vuex.Store({
         },
         addCommand(state, payload) {
             state.commandList.push(payload.command);
+        },
+        setCommandStartPos(state) {
+            let currentPos;
+            state.commandList.forEach(command => {
+                if(command.name == "m") {
+                    currentPos = [ command.dataList[0], command.dataList[1] ]
+                    command.startPos = currentPos
+                }
+                else if (command.name == "l") {
+                    command.startPos = currentPos
+                    currentPos = [ command.dataList[0], command.dataList[1] ]
+                }
+                else if (command.name == "q") {
+                    command.startPos = currentPos
+                    currentPos = [ command.dataList[0], command.dataList[1] ]
+                }
+            })
         }
     }
 });
@@ -68,7 +93,18 @@ function onclick_update(event) {
     commandList.forEach(command => {
         store.commit('addCommand', { command: command });
     });
-    updateCanvas(commandList);
+    store.commit('setCommandStartPos');
+
+    const ctx = getCanvasContext();
+    updateCanvas(ctx, commandList, []);
+}
+
+function onclick_command(event) {
+    const commandIndex = $(event.target).attr("command-index")
+    console.debug("onclick_command commandIndex = " + commandIndex)
+    const command = store.state.commandList[commandIndex]
+    const ctx = getCanvasContext();
+    updateCanvas(ctx, store.state.commandList, [command]);
 }
 
 function getCommandList(tokenList) {
@@ -92,15 +128,31 @@ function getCommandList(tokenList) {
     return commandList;
 }
 
-function updateCanvas(commandList) {
-    let canvas = $("#canvas1")[0];
-    const ctx = canvas.getContext("2d");
-    ctx.save();
+function getCanvasContext() {
+    const canvas = $("#canvas1")[0]
+    const ctx = canvas.getContext("2d")
+    return ctx;
+}
+
+function updateCanvas(ctx, commandList, selectedCommands) {
+    ctx.save()
+    setupCanvas(ctx)
+    drawFont(ctx,commandList)
+    selectedCommands.forEach(command => {
+        drawSelectedCommand(ctx, command)
+    })
+    ctx.restore()
+}
+
+function setupCanvas(ctx) {
     ctx.clearRect(0, 0, 300, 300);
-    ctx.lineWidth = 10;
+    ctx.translate(0, 250);
+    ctx.scale(0.2, -0.2);
+}
+
+function drawFont(ctx, commandList) {
+    ctx.lineWidth = 6;
     ctx.fillStyle = "#AAA";
-    ctx.translate(0, 200);
-    ctx.scale(0.1, -0.1);
     ctx.beginPath();
     commandList.forEach(command => {
         console.debug(command.name);
@@ -108,5 +160,14 @@ function updateCanvas(commandList) {
     });
     ctx.fill();
     ctx.stroke();
+}
+
+function drawSelectedCommand(ctx, command) {
+    ctx.save();
+
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = "#F00";
+    command.strokeCommand(ctx)
+
     ctx.restore();
 }
