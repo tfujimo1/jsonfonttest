@@ -21,7 +21,7 @@
 
     <section class="section-input">
       <label for="#command-str">コマンド：</label>
-      <input id="command-str" type="text" v-bind:value="commandStr">
+      <textarea id="command-str">{{commandStr}}</textarea>
       <button id="button-update" onclick="onclick_update(event)">update</button>
     </section>
 

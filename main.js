@@ -26,10 +26,26 @@ class CommandData {
         }
     }
     strokeCommand(ctx) {
+        const radius = 15
+        const endAngle = Math.PI * 2;
+        ctx.lineWidth = 10
+        ctx.strokeStyle = "#F00"
         ctx.beginPath()
-        ctx.moveTo(this.startPos[0], this.startPos[1])
-        this.drawPath(ctx)
-        ctx.stroke()
+            ctx.moveTo(this.startPos[0], this.startPos[1])
+            this.drawPath(ctx)
+            ctx.stroke()
+        ctx.closePath()
+        ctx.lineWidth = 17
+        ctx.strokeStyle = "#FFF"
+        ctx.beginPath()
+            ctx.arc(this.startPos[0], this.startPos[1], radius, 0, endAngle, true)
+            ctx.stroke()
+        ctx.closePath()
+        ctx.lineWidth = 10
+        ctx.strokeStyle = "#F00"
+        ctx.beginPath()
+            ctx.arc(this.startPos[0], this.startPos[1], radius, 0, endAngle, true)
+            ctx.stroke()
         ctx.closePath()
     }
 
@@ -165,8 +181,6 @@ function drawFont(ctx, commandList) {
 function drawSelectedCommand(ctx, command) {
     ctx.save();
 
-    ctx.lineWidth = 10;
-    ctx.strokeStyle = "#F00";
     command.strokeCommand(ctx)
 
     ctx.restore();
